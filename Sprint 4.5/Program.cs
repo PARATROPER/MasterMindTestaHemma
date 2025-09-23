@@ -1,6 +1,7 @@
 ﻿const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå:
+Console.OutputEncoding = System.Text.Encoding.UTF8;
 Random random = new Random();   // skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
-
+char plupp = '\u2B24';          // definierar variabeln plupp som en plupp till konsolen genom \u2B24
 
 
 
@@ -19,16 +20,11 @@ foreach (char p in gissningArray)
 Console.WriteLine("\nRätt rad är:");
 foreach (char c in facit)
 {
-   
     PrintFarg(c);
-
 }
 
 
 
-
-
-              
 char[] RattRad(Random random)
 {
     char[] colors = { 'R', 'O', 'Y', 'G', 'B', 'P' }; // En array för att definiera färgerna vi valt
@@ -45,7 +41,7 @@ char[] RattRad(Random random)
 void PrintFarg(char farg)
 {
     Console.ForegroundColor = CONSOLE_FORGRUND;                 // Konstanten tillämpas i metoder:
-
+    
     switch (farg)
     {
         case 'R':
@@ -72,12 +68,20 @@ void PrintFarg(char farg)
             Console.ForegroundColor = ConsoleColor.Magenta;
             break;
     }
-
-    Console.Write($" {farg}");  // skriver ut varje char med rätt färg + ett mellanrum mellan bokstäverna
+ 
+    Console.Write($" {plupp}");  // skriver ut varje char med rätt färg + ett mellanrum mellan bokstäverna
     Console.ResetColor(); // Behövs detta eftersom vi har konstanten i metoden?.... verkar så
 
 }
 
 
 
-// Console.WriteLine("\nKLAR!");
+
+struct Rad          // Vi ska ha metoder i struct
+{
+
+}
+
+
+
+

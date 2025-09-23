@@ -7,12 +7,6 @@ Console.WriteLine(string.Join(" ", facit)); // skriver ut alla värden i arrayen
 
 
 
-
-
-
-
-
-
 //int[] arrayDiceValue = new int[6]; // skapar en int [] med 6 värdehållare
 //for (int i = 0; i < arrayDiceValue.Length; i++)   // Loopar igenom arrayen och tilldelar ett random tal till varje plats
 //{
@@ -23,15 +17,15 @@ Console.WriteLine(string.Join(" ", facit)); // skriver ut alla värden i arrayen
 
 
 
-char [] RattRad(Random random)
+char [] RattRad(Random random)  // Metod som skapar en rad med 4 värden utifrån angivna chars. 
 {
     char[] colors = { 'R', 'O', 'Y', 'G', 'B', 'P' }; // En array för att definiera färgerna vi valt
-    char[] randomColor = new char[4];
+    char[] randomColor = new char[4];                 // arrayen där de slumpade värdena lagras
 
     for (int i = 0; i < randomColor.Length; i++)
     {
-       int index = random.Next(0, colors.Length);
-       randomColor[i] = colors[index];
+       int index = random.Next(0, colors.Length);   // Skapar en variabel index som får ett värde mellan 0-5. Men man kan bara köra colos.Length
+       randomColor[i] = colors[index];              // Sätter randomColor[i] = colors[index] som då översätter till Char från colors
     }
     return randomColor;
 }

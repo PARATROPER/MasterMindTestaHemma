@@ -8,9 +8,7 @@
 
 //inmatning = Console.ReadLine.Trim().ToUpper()             VID ANVÄNDARINPUT för att undvika felmeddelande
 
-
 const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå:
-
 
 Random random = new Random();   // skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
 
@@ -18,7 +16,6 @@ char[] facit = RattRad(random);                             // skapar en NY char
 foreach (char c in facit)
 {
     PrintFarg(c);
-    
 }
 
 Console.WriteLine("\nKLAR!");
@@ -39,7 +36,8 @@ char[] RattRad(Random random)
 
 void PrintFarg(char farg)
 {
-    Console.ForegroundColor = CONSOLE_FORGRUND;                 // Konstanten tillämpas i metoder:
+    /*Console.ForegroundColor = CONSOLE_FORGRUND;  */               // Konstanten tillämpas i metoder:
+    Console.ResetColor(); // Behövs detta eftersom vi har konstanten i metoden?.... verkar så
 
     switch (farg)
     {
@@ -68,7 +66,7 @@ void PrintFarg(char farg)
             break;
     }
 
-    Console.Write($" {farg}");  // skriver ut varje char med rätt färg + ett mellanrum mellan bokstäverna
+    Console.Write($"{farg} ");  // skriver ut varje char med rätt färg + ett mellanrum mellan bokstäverna
     Console.ResetColor(); // Behövs detta eftersom vi har konstanten i metoden?.... verkar så
 
 }

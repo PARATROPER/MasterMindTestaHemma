@@ -1,50 +1,55 @@
 ﻿const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå:
-
-
 Random random = new Random();   // skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
 
-char[] facit = RattRad(random);                             // skapar en NY char-array genom att anropa RattRad-metoden med 
-foreach (char c in facit)
+
+
+
+while (true)
 {
-    PrintFarg(c);
+    Console.WriteLine("\nHej och välkommen till spelet Mastermind:\nDu kommer kunna använda 'quit'/'fusk'/'hjälp'");
+    Console.Write("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
+    string gissning = Console.ReadLine().ToUpper();
+    char[] gissningArray = gissning.ToCharArray();
+    char[] facit = RattRad(random);
 
-}
-
-
-
-string gissning = TaInput();                                        //OBS OBS OBS - Jag vill begränsa valen till ROYGBP
-char[] gissningArray = gissning.ToCharArray();                      //OBS OBS OBS - Jag vill ha en loop som håller igång programmet
-                                                                    //OBS OBS OBS - Jag vill undersöka om jag kan ändra min metod TaInput()
-                                                                    //... till att också göra om arrayen och använda printFarg. Går det?
-foreach (char p in gissningArray)
-{
-    PrintFarg(p);
-}
-
-//En EGEN metod för att ta in input från användaren. KUL! :D 
-
-string TaInput()
-{
-
-    while (true)
+    if (gissning == "QUIT")
     {
-        Console.WriteLine(" ");
-        Console.WriteLine("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P");
-        string gissning = Console.ReadLine().ToUpper();
-        if (gissning.Length == 4)
+        return;
+    }
+    if (gissning == "HJÄLP")
+    {
+        Console.WriteLine("Du kommer få hjälp snart");
+        return;
+    }
+    if (gissning == "FUSK")
+    {
+        Console.WriteLine("\nRätt rad är:");
+        foreach (char c in facit)
         {
-            return (gissning);
-        }
-        else
-        {
-            Console.WriteLine("Du har angivit fel format");
-
+            PrintFarg(c);
         }
     }
+
+    else
+    {
+        Console.WriteLine("Din gissning:");
+        foreach (char p in gissningArray)
+        {
+            PrintFarg(p);
+        }
+
+        
+    }
+
+
+
 }
-//Console.WriteLine(" ");
-//Console.WriteLine("Ange din färggissning, välj mellan R,O,Y,G,B,P");
-//string gissning = Console.ReadLine();
+
+
+
+
+
+
 
 char[] RattRad(Random random)
 {

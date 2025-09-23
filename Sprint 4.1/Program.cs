@@ -2,7 +2,7 @@
 
 Random random = new Random();  // skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y)
 
-int [] test = { 1, 1, 1, 1, 1, 1, };
+int [] test = { 1, 1, 1, 1, 1, 1, }; // En array för att testa metoden Concat. (slår ihop arrayer)
 
 
 int[] arrayDiceValue = new int[6]; // skapar en int [] med 6 värdehållare
@@ -13,7 +13,7 @@ for (int i = 0; i < arrayDiceValue.Length; i++)   // Loopar igenom arrayen och t
 }
 
 Console.WriteLine(string.Join(" ", arrayDiceValue)); // skriver ut alla värden i arrayen genom att göra om int värdena i arrayen till string
-Console.WriteLine(string.Join(" ", arrayDiceValue.Concat(test))); // testar lägga till två arrayer... funkar, men måste nog vara samma värdetyp
+Console.WriteLine(string.Join(" ", arrayDiceValue.Concat(test))); // testar lägga till två arrayer... funkar, men måste nog vara samma värdetyp, iaf kompatibla. String och int funkar inte. 
 
 
 

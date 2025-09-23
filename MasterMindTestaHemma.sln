@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.1", "Sprint 4.1\Sprint 4.1.csproj", "{2AC490C3-9FC4-4592-8958-1C662AD46683}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.4", "Sprint 4.4\Sprint 4.4.csproj", "{8726CD7E-7637-4D1E-9245-2EA4E09D1DAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.4 - FixTrix", "Sprint 4.4 - FixTrix\Sprint 4.4 - FixTrix.csproj", "{ADF27EEA-6715-450A-946D-B693747E1718}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.5", "Sprint 4.5\Sprint 4.5.csproj", "{2DFD5134-72F1-4D31-9672-1A79A219EEEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{ADF27EEA-6715-450A-946D-B693747E1718}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADF27EEA-6715-450A-946D-B693747E1718}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADF27EEA-6715-450A-946D-B693747E1718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DFD5134-72F1-4D31-9672-1A79A219EEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DFD5134-72F1-4D31-9672-1A79A219EEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DFD5134-72F1-4D31-9672-1A79A219EEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DFD5134-72F1-4D31-9672-1A79A219EEEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
