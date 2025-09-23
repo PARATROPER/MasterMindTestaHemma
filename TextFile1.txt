@@ -1,0 +1,54 @@
+﻿Snyggt fokus 🎯 Här kommer en snabb recap av Sprint 4.1–4.2:
+____________________________________________________________________________________________________________________________________________
+Sprint 4.1 – Slumpa tärningar 🎲
+Du lärde dig skapa en array och fylla den med slumpvärden via Random.Next().
+Viktigt att hålla koll på index vs antal element → därför Next(0, n) när du ska in i en array.
+Vi skrev ut arrayen både med en loop och med string.Join (från string-klassen).
+____________________________________________________________________________________________________________________________________________
+Sprint 4.2 – Slumpa färger 🎨
+Du skapade en char[] med färgernas initialer (R, O, Y, G, B, P).
+Du slumpade index för att plocka färger från arrayen.
+Du byggde en egen metod RattRad(Random rnd) som returnerar en rad (array) med 4 slumpade färger.
+Main blev ”clean”: bara anropa metoden, ta emot arrayen och skriva ut.
+
+👉 Alltså: du har nu jobbat med arrays, loopar, metoder, parametrar och returvärden – en hel minikarta av programmering! 🚀
+
+____________________________________________________________________________________________________________________________________________
+Sprint 4.3 – En bokstav till färg:
+
+Målet: Att kunna skriva ut varje bokstav (R, O, Y, G, B, P) i sin riktiga konsolfärg.
+
+Vad du gjorde: 
+Du byggde metoden PrintFarg(char farg).
+Inuti använde du en switch för att koppla varje bokstav till rätt ConsoleColor.
+Du skrev ut bokstaven i rätt färg med Console.Write().
+Du återställde färgen efteråt med Console.ResetColor().
+
+Du anropade metoden från Main.
+Du hämtade en slumpad rad (4 bokstäver) via RattRad.
+Du gick igenom raden med foreach (char c in facit) och kallade PrintFarg(c) för varje bokstav.
+
+Viktiga lärdomar
+void används för metoder som ”gör något” (som utskrift) men inte behöver returnera något.
+string.Join är bra för text, men för färg/utseende måste man skriva ut varje element separat.
+Du fick en känsla för hur metoder kan samarbeta: RattRad genererar data, PrintFarg visar den.
+____________________________________________________________________________________________________________________________________________
+
+Sprint 4.4 – Fyra bokstäver till färg:
+
+Målet:
+Att ta in en hel gissning från användaren (4 bokstäver) och skriva ut den i rätt färger i konsolen.
+
+Vad du gjorde:
+Du frågade användaren om en gissning med Console.ReadLine().
+Du gjorde om strängen till en array med ToCharArray().
+"RYGB" → {'R','Y','G','B'}
+Du loopade igenom arrayen med foreach.
+Du anropade PrintFarg(p) för varje bokstav → så de skrevs ut i sina rätta färger.
+
+Viktiga lärdomar:
+En sträng (string) kan omvandlas till en char[] med ToCharArray().
+foreach är perfekt när man vill gå igenom en hel array utan att bry sig om index.
+Genom att kombinera två metoder (RattRad för slump, PrintFarg för färg) kan du nu hantera både facit och gissningar.
+Du har för första gången fått in användarens input i spelet!
+____________________________________________________________________________________________________________________________________________
