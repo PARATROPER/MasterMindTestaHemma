@@ -52,3 +52,98 @@ foreach är perfekt när man vill gå igenom en hel array utan att bry sig om in
 Genom att kombinera två metoder (RattRad för slump, PrintFarg för färg) kan du nu hantera både facit och gissningar.
 Du har för första gången fått in användarens input i spelet!
 ____________________________________________________________________________________________________________________________________________
+Sprint 4.5 - – Struktur för en rad
+
+Målet:
+Att kunna lagra en hel rad (4 färger) i en egen datatyp (struct).
+Att koppla metoder till raden, t.ex. skriva ut en plupp i rätt färg.
+
+Vad du gjort:
+Skapat en struct Rad med en intern char[] farger.
+Lagt till en konstruktor som tar emot en array och lagrar den.
+Skapat en metod PrintFarg(int position) som skriver ut en plupp i rätt färg.
+I Main kan du nu skapa både facit och gissning som Rad-objekt och skriva ut dem i färg.
+
+Lärdomar:
+En struct kan samla både data (arrayen) och logik (metoder).
+return i en konstruktor behövs inte – du bara initierar datan.
+Metoder kan använda arrayens innehåll utan att behöva nya parametrar varje gång.
+____________________________________________________________________________________________________________________________________________
+✅ Sprint 4.6 – Skriv ut en hel rad
+
+Målet:
+Gör det enkelt att skriva ut en hel rad pluppar i färg utan att behöva loopa i Main.
+
+TO DO:
+Bygg vidare på struct Rad.
+Lägg till en metod PrintRad().
+
+I PrintRad:
+Loopa igenom alla positioner i farger.
+Anropa PrintFarg(i) för varje position.
+Avsluta med Console.WriteLine(); så nästa utskrift hamnar på en ny rad.
+
+Använd i Main:
+facitStruct.PrintRad();
+gissning.PrintRad();
+
+Resultat:
+Du kan nu skriva ut en hel rad i färg med ett enda metodanrop.
+Main blir mycket renare, eftersom loopen är kapslad inuti structen.
+Din Rad-struct börjar kännas som en riktig byggsten i spelet: den innehåller både data (färgerna) och logik (utskrift).
+____________________________________________________________________________________________________________________________________________
+🙌 Här kommer recapen för Sprint 4.7 – Gissa en färg:
+🎯 Målet
+Att börja jämföra gissningar med facit.
+Spelaren gissar en färg på en bestämd position (i sprinten är det position 0).
+Programmet ska säga rätt eller fel, och fortsätta tills gissningen är rätt eller spelaren väljer att avsluta.
+
+✅ Vad du gjorde
+Skapade en fördefinierad facit-rad ({'B','O','O','B'}).
+La facit i en Rad-struct och använde PrintRad() för att visa den.
+Tog emot en gissning från användaren (Console.ReadLine().ToUpper()).
+Konverterade gissningen till char[].
+Använde KontrolleraFarg(int position, char bokstav) för att jämföra bokstav mot facit.
+Returnerade true/false och skrev ut "Rätt" eller "Fel".
+Byggde en loop som håller spelet igång tills användaren skriver "Q".
+Lagt in validering så att endast bokstäverna R,O,Y,G,B,P accepteras, och exakt 4 tecken.
+
+💡 Viktiga lärdomar
+
+Validering: hur man stoppar ogiltig input med All + Contains.
+continue: hoppar över resten av loopens iteration och börjar om.
+KontrolleraFarg: du tränade på att skriva en metod som returnerar bool beroende på ett villkor.
+Main blev tydligare genom att hantera specialkommandon (Q, FACIT) innan gissningen skickas till structen.
+
+👉 Nu har du alltså facit, input, validering och enkel jämförelse på plats – en stor grundsten i Mastermind.
+____________________________________________________________________________________________________________________________________________
+🙌 Sprint 4.8 – Jämför alla färger i raden
+
+🎯 Målet
+Att gå från att jämföra en enskild färg till att jämföra hela raden (alla fyra positionerna).
+Programmet ska visa rätt/fel för varje plats och avslutas när hela raden är korrekt.
+
+✅ Vad du gjorde
+Behöll en fördefinierad facit-rad ({'B','O','O','B'}).
+La facit i en Rad-struct och använde PrintRad() för att visa den.
+Tog emot gissning från användaren (Console.ReadLine().ToUpper()).
+Konverterade gissningen till char[].
+Byggde en for-loop som gick igenom alla positioner (0–3) och jämförde med facit via KontrolleraFarg.
+Skrev ut ”Rätt på plats X” eller ”Fel på plats X” för varje position.
+Införde en bool gissningRatt som sattes till false om någon position var fel.
+Om hela raden var rätt → rensade konsolen, visade ett grattis-meddelande, skrev ut facit både med PrintRad() (pluppar i färg) och med HamtaRad() (text), och avslutade spelet med break.
+
+💡 Viktiga lärdomar
+Skillnaden mellan att avsluta en loop med break och att hoppa över en iteration med continue.
+Att alltid använda { } runt if/else-block för att undvika buggar.
+Hur man kan kombinera grafisk utskrift (PrintRad) och textrepresentation (HamtaRad) i structen.
+Att använda en flagga (gissningRatt) för att hålla koll på om alla positioner stämmer.
+
+👉 Nu har du byggt en komplett jämförelse av hela raden – en central del i Mastermind-logiken.
+
+💡 Viktiga lärdomar
+Skillnaden mellan att avsluta en loop (break;) och hoppa över iterationer (continue;).
+Att alltid använda { } runt if/else-block för att undvika logiska buggar.
+Hur man kan kombinera grafisk utskrift (PrintRad) med textrepresentation (HamtaRad) i sin struct.
+if (allaRatt) är en förkortning för if (allaRatt == true) → kör bara när boolen är sann.
+____________________________________________________________________________________________________________________________________________

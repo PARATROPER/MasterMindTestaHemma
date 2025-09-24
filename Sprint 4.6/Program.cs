@@ -9,27 +9,16 @@ char plupp = '\u2B24';          // definierar variabeln plupp som en plupp till 
 Console.Write("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
 string gissningInput = Console.ReadLine().ToUpper();
 char[] gissningArray = gissningInput.ToCharArray();
-Rad gissning = new Rad(gissningArray); 
+Rad gissning = new Rad(gissningArray);
+Console.WriteLine("Din gissning: ");
+gissning.PrintRad();
+
 
 char[] facit = RattRad(random);
 Rad facitStruct = new Rad(facit);
+Console.WriteLine("Facit är: ");
+facitStruct.PrintRad();
 
-
-
-
-
-for (int i = 0; i < facit.Length; i++)
-{
-    facitStruct.PrintFarg(i);
-}
-Console.WriteLine("Facit");
-
-// Skriv ut alla fyra pluppar i raden
-for (int i = 0; i < gissningArray.Length; i++)
-{
-    gissning.PrintFarg(i);
-}
-Console.WriteLine("Gissning");
 
 
 char[] RattRad(Random random)
@@ -89,7 +78,16 @@ struct Rad          // Vi ska ha metoder i struct
 
         Console.Write("\u2B24"); // skriver ut plupp
         Console.ResetColor(); // reset color
+        
+    }
 
+    public void PrintRad()
+    {
+        for (int i = 0; i < farger.Length; i++)
+        {
+            PrintFarg(i);
+        }
+        Console.WriteLine(" ");
     }
 
 }

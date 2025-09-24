@@ -5,31 +5,52 @@ char plupp = '\u2B24';          // definierar variabeln plupp som en plupp till 
 
 
 
-
-Console.Write("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
-string gissningInput = Console.ReadLine().ToUpper();
-char[] gissningArray = gissningInput.ToCharArray();
-Rad gissning = new Rad(gissningArray); 
-
-char[] facit = RattRad(random);
-Rad facitStruct = new Rad(facit);
+char[] facit = { 'B', 'O', 'O', 'B' };   // fördefinierad rad för facit, den slumpas alltså inte av metoden RattRad.
 
 
-
-
-
-for (int i = 0; i < facit.Length; i++)
+while (true)
 {
-    facitStruct.PrintFarg(i);
-}
-Console.WriteLine("Facit");
+    Console.WriteLine("Skriv 'Q' = Quit, 'FACIT' = rätt svar");
+    Console.Write("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
+    
+    string gissningInput = Console.ReadLine().ToUpper();
+    Rad facitStruct = new Rad(facit);
 
-// Skriv ut alla fyra pluppar i raden
-for (int i = 0; i < gissningArray.Length; i++)
-{
-    gissning.PrintFarg(i);
+    if (gissningInput == "Q")
+    {
+        break;
+    }
+    else if (gissningInput == "FACIT")
+    {
+        Console.Write("Facit är:");
+        facitStruct.PrintRad();
+        continue;
+    }
+
+    char[] tillatna = { 'R', 'O', 'Y', 'G', 'B', 'P' };
+    if (!gissningInput.All(c => tillatna.Contains(c)) || gissningInput.Length != 4)
+    {
+        Console.WriteLine("Använd exakt 4 tillåtna tecken: R,O,Y,G,B,P \n");
+        continue;
+    }    
+
+    char[] gissningArray = gissningInput.ToCharArray();
+    Rad gissningStruct = new Rad(gissningArray);
+
+
+    if (gissningStruct.KontrolleraFarg(0, facit[0]))   // om användarens input på index 0 == facits index 0 
+    {
+
+        Console.WriteLine("Din gissning är RÄTT ");
+        gissningStruct.PrintRad();
+
+    }
+    else
+    {
+        Console.WriteLine("Din gissning är FEL");
+    }
+    
 }
-Console.WriteLine("Gissning");
 
 
 char[] RattRad(Random random)
@@ -53,11 +74,13 @@ struct Rad          // Vi ska ha metoder i struct
 
     public Rad(char[] input)
     {
+
         farger = input;
     }
 
     public void PrintFarg(int position)
     {
+
         char bokstav = farger[position];
 
         switch (bokstav)
@@ -92,9 +115,30 @@ struct Rad          // Vi ska ha metoder i struct
 
     }
 
+
+    public void PrintRad()
+    {
+        for (int i = 0; i < farger.Length; i++)
+        {
+            PrintFarg(i);
+        }
+        Console.WriteLine(" ");
+    }
+
+
+    public bool KontrolleraFarg(int position, char bokstav)
+    {
+        if (farger[position] == bokstav)
+        {
+
+            return true;
+        }
+        else
+        {
+            return false;
+
+        }
+    }
+
+
 }
-
-
-
-
-
