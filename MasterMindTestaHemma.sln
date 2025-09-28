@@ -26,7 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.7", "Sprint 4.7\Sp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.8", "Sprint 4.8\Sprint 4.8.csproj", "{6EC92244-2F9A-4BCA-954F-75AD308FA378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.9", "Sprint 4.9\Sprint 4.9.csproj", "{0417A379-E5AA-48AB-A53C-1A8588858CA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.85", "Sprint 4.9\Sprint 4.85.csproj", "{0417A379-E5AA-48AB-A53C-1A8588858CA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 0 - Leka", "Sprint 0 - Leka\Sprint 0 - Leka.csproj", "{91CB1EAD-CAC5-4AFA-9085-341CC8AEA5D4}"
 EndProject

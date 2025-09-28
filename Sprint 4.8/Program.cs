@@ -4,7 +4,7 @@ Random random = new Random();   // skapar ett objekt av klassen Random för att 
 char plupp = '\u2B24';          // definierar variabeln plupp som en plupp till konsolen genom \u2B24
 
 
-char[] facit = { 'B', 'O', 'O', 'B' };   // fördefinierad rad för facit, den slumpas alltså inte av metoden RattRad.
+char[] facit = RattRad(random);  // fördefinierad rad för facit, den slumpas alltså inte av metoden RattRad.
 
 
 while (true)
@@ -41,11 +41,15 @@ while (true)
     {
         if (facitStruct.KontrolleraFarg(i, gissningArray[i]))
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Rätt på plats {i + 1}");
+            Console.ResetColor();
         }
         else
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Fel på plats {i + 1}");
+            Console.ResetColor();
             gissningRatt = false;
         }
     }

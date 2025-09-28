@@ -3,16 +3,22 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 Random random = new Random();   // skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
 char plupp = '\u2B24';          // definierar variabeln plupp som en plupp till konsolen genom \u2B24
 
+
 char[] facit = RattRad(random);
+Rad facitStruct = new Rad(facit);
+
+
 Console.WriteLine("Skriv 'Q' = Quit, 'F' = Facit, 'H' = Hjälp");
 Console.WriteLine("\nAnge din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
+
+
 while (true)
 {
-    bool gissningRatt = true;
-    Console.Write("Ange ny gissning: \t");
 
+    //bool gissningRatt = true;
+    Console.Write("Ange ny gissning: \t");
     string gissningInput = Console.ReadLine().ToUpper();
-    Rad facitStruct = new Rad(facit);
+
 
     if (gissningInput == "Q")
     {
@@ -31,34 +37,25 @@ while (true)
         continue;
     }
 
+    //validera input
     char[] tillatna = { 'R', 'O', 'Y', 'G', 'B', 'P' };
     if (!gissningInput.All(c => tillatna.Contains(c)) || gissningInput.Length != 4)
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("\nOBS OBS OBS\nAnvänd exakt 4 tillåtna tecken: R,O,Y,G,B,P \n");
         Console.ResetColor();
+
         continue;
     }
+
+
+    
     //Är det här jag ska lägga en for loop som räknar upp från 1-->12?
     char[] gissningArray = gissningInput.ToCharArray();
     Rad gissningStruct = new Rad(gissningArray);
 
-    for (int i = 0; i < gissningArray.Length; i++)              //Går igenom gissningarray och kontrollerar färg gentemot facitStruct
-    {
-        if (facitStruct.KontrolleraFarg(i, gissningArray[i]))
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Rätt på plats {i + 1}");
-            Console.ResetColor();
-        }
-        else
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Fel på plats {i + 1}");
-            Console.ResetColor();
-            gissningRatt = false;
-        }
-    }
+    bool gissningRatt = gissningStruct.PrintAndCheckRow(facitStruct); // kolla raden med PrintAndCheckRow
+
     if (gissningRatt)
     {
         Console.Clear();
@@ -71,6 +68,7 @@ while (true)
         Console.WriteLine("\n\nTryck på Enter 2ggr för att avsluta spelet");
         Console.ReadKey();
         break;
+
     }
 
 }
@@ -100,6 +98,8 @@ struct Rad          // Vi ska ha metoder i struct
 
         farger = input;
     }
+
+
 
     public void PrintFarg(int position)
     {
@@ -159,6 +159,21 @@ struct Rad          // Vi ska ha metoder i struct
             return false;
 
         }
+    }
+
+    public bool PrintAndCheckRow(Rad RattRad)
+    {
+        PrintRad(); //skriver ut raden med rätt färg
+        if (HamtaRad() == RattRad.HamtaRad())           //Detta kan skrivas på en rad??? För en bool är antingen true eller false.
+        {
+            return true;
+        }
+        else
+        {
+            Console.WriteLine("Raden är fel, försök igen");
+            return false;
+        }
+
     }
 
     public string HamtaRad()                //hämtar användarens input för att kunna göra en utskrift i slutet av spelet.

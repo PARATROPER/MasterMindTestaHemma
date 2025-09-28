@@ -4,18 +4,21 @@ Random random = new Random();   // skapar ett objekt av klassen Random för att 
 char plupp = '\u2B24';          // definierar variabeln plupp som en plupp till konsolen genom \u2B24
 
 
-//TEST - pushade kod 2025-09-24 kl 22:47
-
 char[] facit = RattRad(random);
+Rad facitStruct = new Rad(facit);
+
+
 Console.WriteLine("Skriv 'Q' = Quit, 'F' = Facit, 'H' = Hjälp");
 Console.WriteLine("\nAnge din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
+
+
 while (true)
 {
-    bool gissningRatt = true;
-    Console.Write("Ange ny gissning: \t");
 
+    //bool gissningRatt = true;
+    Console.Write("Ange ny gissning: \t");
     string gissningInput = Console.ReadLine().ToUpper();
-    Rad facitStruct = new Rad(facit);
+    
 
     if (gissningInput == "Q")
     {
@@ -34,17 +37,36 @@ while (true)
         continue;
     }
 
+    //validera input
     char[] tillatna = { 'R', 'O', 'Y', 'G', 'B', 'P' };
     if (!gissningInput.All(c => tillatna.Contains(c)) || gissningInput.Length != 4)
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("\nOBS OBS OBS\nAnvänd exakt 4 tillåtna tecken: R,O,Y,G,B,P \n");
         Console.ResetColor();
+
         continue;
     }
-
+    //Är det här jag ska lägga en for loop som räknar upp från 1-->12?
     char[] gissningArray = gissningInput.ToCharArray();
     Rad gissningStruct = new Rad(gissningArray);
+
+    bool gissningRatt = gissningStruct.PrintAndCheckRow(facitStruct); // kolla raden med PrintAndCheckRow
+
+    if (gissningRatt)
+    {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Grattis du har vunnit spelet!\n");
+        facitStruct.PrintRad();
+        Console.ResetColor();
+        Console.WriteLine($"Den rätta raden = {facitStruct.HamtaRad()}");
+
+        Console.WriteLine("\n\nTryck på Enter 2ggr för att avsluta spelet");
+        Console.ReadKey();
+        break;
+
+    }
 
     for (int i = 0; i < gissningArray.Length; i++)              //Går igenom gissningarray och kontrollerar färg gentemot facitStruct
     {
@@ -62,19 +84,8 @@ while (true)
             gissningRatt = false;
         }
     }
-    if (gissningRatt)
-    {
-        Console.Clear();
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Grattis du har vunnit spelet!\n");
-        facitStruct.PrintRad();
-        Console.ResetColor();
-        Console.WriteLine($"Den rätta raden = {facitStruct.HamtaRad()}");
-
-        Console.WriteLine("\n\nTryck på Enter 2ggr för att avsluta spelet");
-        Console.ReadKey();
-        break;
-    }
+    
+    
 
 }
 
@@ -103,6 +114,8 @@ struct Rad          // Vi ska ha metoder i struct
 
         farger = input;
     }
+
+
 
     public void PrintFarg(int position)
     {
@@ -162,6 +175,20 @@ struct Rad          // Vi ska ha metoder i struct
             return false;
 
         }
+    }
+
+    public bool PrintAndCheckRow(Rad RattRad)
+    {
+        PrintRad(); //skriver ut raden med rätt färg
+        if (HamtaRad() == RattRad.HamtaRad())           //Detta kan skrivas på en rad??? För en bool är antingen true eller false.
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     public string HamtaRad()                //hämtar användarens input för att kunna göra en utskrift i slutet av spelet.

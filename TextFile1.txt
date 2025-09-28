@@ -120,30 +120,25 @@ ________________________________________________________________________________
 🙌 Sprint 4.8 – Jämför alla färger i raden
 
 🎯 Målet
-Att gå från att jämföra en enskild färg till att jämföra hela raden (alla fyra positionerna).
-Programmet ska visa rätt/fel för varje plats och avslutas när hela raden är korrekt.
+Utöka jämförelsen från en enskild färg till hela raden.
+Spelet ska nu avgöra om spelarens rad är helt rätt eller inte, och avslutas om den är korrekt.
 
 ✅ Vad du gjorde
-Behöll en fördefinierad facit-rad ({'B','O','O','B'}).
-La facit i en Rad-struct och använde PrintRad() för att visa den.
-Tog emot gissning från användaren (Console.ReadLine().ToUpper()).
-Konverterade gissningen till char[].
-Byggde en for-loop som gick igenom alla positioner (0–3) och jämförde med facit via KontrolleraFarg.
-Skrev ut ”Rätt på plats X” eller ”Fel på plats X” för varje position.
-Införde en bool gissningRatt som sattes till false om någon position var fel.
-Om hela raden var rätt → rensade konsolen, visade ett grattis-meddelande, skrev ut facit både med PrintRad() (pluppar i färg) och med HamtaRad() (text), och avslutade spelet med break.
+Slumpade fram en facit-rad med RattRad().
+Skapade en instans av Rad för facit (facitStruct).
+Lät spelaren skriva in en gissning → validerade att det var exakt 4 tecken och att alla ingick i R,O,Y,G,B,P.
+Konverterade gissningen till char[] och skapade en ny Rad för den (gissningStruct).
+Flyttade logiken från Main till en ny metod i structen:
+PrintAndCheckRow(Rad radRatt) → skriver ut raden som pluppar och returnerar true om den matchar facit.
+Använde PrintAndCheckRow i Main för att avgöra om gissningen är rätt eller fel.
+Om raden var rätt → skrev ut grattis-meddelande, visade facit, och avslutade spelet.
 
 💡 Viktiga lärdomar
-Skillnaden mellan att avsluta en loop med break och att hoppa över en iteration med continue.
-Att alltid använda { } runt if/else-block för att undvika buggar.
-Hur man kan kombinera grafisk utskrift (PrintRad) och textrepresentation (HamtaRad) i structen.
-Att använda en flagga (gissningRatt) för att hålla koll på om alla positioner stämmer.
+En metod kan både skriva ut något och returnera ett värde (här: pluppar + bool).
+Main blir mycket renare när logik kapslas in i structen.
+Skillnaden mellan att jämföra enskilda tecken (KontrolleraFarg) och hela raden (PrintAndCheckRow).
+Validering av input är avgörande för att undvika buggar (fel längd eller otillåtna bokstäver).
 
-👉 Nu har du byggt en komplett jämförelse av hela raden – en central del i Mastermind-logiken.
-
-💡 Viktiga lärdomar
-Skillnaden mellan att avsluta en loop (break;) och hoppa över iterationer (continue;).
-Att alltid använda { } runt if/else-block för att undvika logiska buggar.
-Hur man kan kombinera grafisk utskrift (PrintRad) med textrepresentation (HamtaRad) i sin struct.
-if (allaRatt) är en förkortning för if (allaRatt == true) → kör bara när boolen är sann.
+👉 Med Sprint 4.8 avklarad har du nu ett fungerande Mastermind som avgör om hela raden är korrekt.
+Nästa steg i Sprint 4.9 blir att utöka logiken: även om raden inte är helt rätt, ska programmet kunna ge feedback på ”rätt färg men fel plats”.
 ____________________________________________________________________________________________________________________________________________
