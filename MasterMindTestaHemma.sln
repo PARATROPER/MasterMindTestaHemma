@@ -30,6 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.85", "Sprint 4.9\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 0 - Leka", "Sprint 0 - Leka\Sprint 0 - Leka.csproj", "{91CB1EAD-CAC5-4AFA-9085-341CC8AEA5D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 4.90", "Sprint 4.90\Sprint 4.90.csproj", "{A3D002AC-A0DA-4CD3-AA91-A2F7CE750CA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprint 0.0 - Förbättra", "Sprint 0.0 - Förbättra\Sprint 0.0 - Förbättra.csproj", "{F3E9AFE5-45C7-4298-A58C-9611C2BF46D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +84,14 @@ Global
 		{91CB1EAD-CAC5-4AFA-9085-341CC8AEA5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91CB1EAD-CAC5-4AFA-9085-341CC8AEA5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91CB1EAD-CAC5-4AFA-9085-341CC8AEA5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D002AC-A0DA-4CD3-AA91-A2F7CE750CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D002AC-A0DA-4CD3-AA91-A2F7CE750CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D002AC-A0DA-4CD3-AA91-A2F7CE750CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D002AC-A0DA-4CD3-AA91-A2F7CE750CA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E9AFE5-45C7-4298-A58C-9611C2BF46D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E9AFE5-45C7-4298-A58C-9611C2BF46D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E9AFE5-45C7-4298-A58C-9611C2BF46D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E9AFE5-45C7-4298-A58C-9611C2BF46D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

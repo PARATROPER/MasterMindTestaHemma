@@ -142,3 +142,23 @@ Validering av input är avgörande för att undvika buggar (fel längd eller oti
 👉 Med Sprint 4.8 avklarad har du nu ett fungerande Mastermind som avgör om hela raden är korrekt.
 Nästa steg i Sprint 4.9 blir att utöka logiken: även om raden inte är helt rätt, ska programmet kunna ge feedback på ”rätt färg men fel plats”.
 ____________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+Förklaring till for-loop med rättning: https://chatgpt.com/s/t_68dab47404388191bc85681e630a8f22
+Så här kan man tänka:
+Första loopen tar hand om "helt rätt" (samma index).
+
+Andra loopen:
+För varje bokstav i gissningen (i) → kolla igenom hela facit (x) efter en match.
+Om det finns en match och den platsen i facit inte redan är upptagen (!facitBool[x]) → markera med 2 (rätt färg, fel plats).
+Avsluta (break) så att bokstaven inte används flera gånger.
