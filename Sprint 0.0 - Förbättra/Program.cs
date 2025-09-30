@@ -1,5 +1,5 @@
 ﻿const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå enligt Dag.
-
+// test push vid 12:10
 Console.OutputEncoding = System.Text.Encoding.UTF8; // Behövs för att kunna skriva ut pluppar (Unicode-symboler)
 Random random = new Random();   // Skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
 char plupp = '\u2B24';          // Möjliggör utskrivt av en plupp i konsollen.
