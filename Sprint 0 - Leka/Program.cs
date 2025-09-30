@@ -1,26 +1,25 @@
-﻿using System.Reflection;
+﻿const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå enligt Dag.
 
-const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå
-Console.OutputEncoding = System.Text.Encoding.UTF8; // Behövs för att kunna skriva ut pluppar
+Console.OutputEncoding = System.Text.Encoding.UTF8; // Behövs för att kunna skriva ut pluppar (Unicode-symboler)
 Random random = new Random();   // Skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
 char plupp = '\u2B24';          // Möjliggör utskrivt av en plupp i konsollen.
 
+// char[] facit = { 'R', 'R', 'B', 'P' }; OM JAG VILL HA EN FÖRDEFINIERAD RAD.
+char[] facit = RattRad(random);  // Skapa en array och slumpa värden för färger, facit som spelaren ska gissa.
 
-char[] facit = RattRad(random);      // Skapa en array och slumpa värden. 
-Rad facitStruct = new Rad(facit);    // Vad gör denna egentligen?
+Rad facitStruct = new Rad(facit);    // Gör om char arrayen till ett Rad-objekt(Instans?) för att kunna använda metoderna.
+Rad[] allaGissningar = new Rad[12];  // Array med plats för alla 12 potentiella gissningar
 
-Rad[] allaGissningar = new Rad[12];  //Skapa en array med plats för alla 12 potentiella gissningar
-
-
+Console.WriteLine("___  ___          _                      _           _ \r\n|  \\/  |         | |                    (_)         | |\r\n| .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |\r\n| |\\/| |/ _` / __| __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` |\r\n| |  | | (_| \\__ \\ ||  __/ |  | | | | | | | | | | (_| |\r\n\\_|  |_/\\__,_|___/\\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|\r\n                                                       \r\n                                                       ");
 Console.WriteLine("Skriv 'Q' = Quit, 'F' = Facit, 'H' = Hjälp");
 Console.WriteLine("\nAnge din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
 
-bool SpeletKor = true;
-int antalForsok = 0;
+bool SpeletKor = true;   // Bestämmer om spelet körs eller ska avslutas
+int antalForsok = 0;     // Räknare för antal gissningar användaren gjort
 
 while (SpeletKor == true)
 {
-    string gissningInput = Console.ReadLine().ToUpper();
+    string gissningInput = Console.ReadLine().ToUpper();    //Läser in användarens gissning och gör om till VERSALER.
 
     if (gissningInput == "Q")
     {
@@ -44,94 +43,42 @@ while (SpeletKor == true)
     if (!gissningInput.All(c => tillatna.Contains(c)) || gissningInput.Length != 4)
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("\nOBS OBS OBS\nAnvänd exakt 4 tillåtna tecken: R,O,Y,G,B,P \n");
+        Console.WriteLine("OBS OBS OBS\nAnvänd exakt 4 tillåtna tecken: R,O,Y,G,B,P");
         Console.ResetColor();
         continue;
-    } //validerar input till ROYGBP & max 4 tecken
+    } //validerar input till R,O,Y,G,B,P & max 4 tecken
 
-
-    char[] gissningArray = gissningInput.ToCharArray();  // Gör om gissningInput från en string till en array
+    // Gör om gissningen till en Rad och lagrar den i historiken --> OBSOBSOBS
+    char[] gissningArray = gissningInput.ToCharArray();  // Gör om string gissningInput till en char-array
     Rad gissningStruct = new Rad(gissningArray);    // Skapar ny instans av.....??? OBS_OBS_OBS_ Hur formulerar jag detta?
     allaGissningar[antalForsok] = gissningStruct;
-    antalForsok++;
+    antalForsok++;      //Ökar räknaren för varje gissning 
 
-    int[] rattning = new int[4];  //En array för att lagra 0=fel färg, 1=fel plats, rätt färg, 2=rätt plats, rätt färg.
-    bool[] facitBool = new bool[4]; //True = använd, False = ej använd
+    int[] rattning = gissningStruct.KontrolleraRad(facitStruct); //Rättar Raden mot facit och får tillbaka int-array med resultat.
+    Console.Clear();
+    Console.WriteLine($"Försök {antalForsok}/12 - R,O,Y,G,B,P"); //Skriver ut vilket försök användern är på
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < antalForsok; i++)
     {
-        if (gissningArray[i] == facit[i])
-        {
-            rattning[i] = 1;
-            facitBool[i] = true;
-        }
-    }// Loopar igenom för att se om rätt färg är på rätt plats.
-
-    for (int i = 0; i < rattning.Length; i++)
-    {
-        if (rattning[i] != 1) // Hoppa över om färgen redan var rätt på rätt plats i tidigare forloop.
-        {
-
-            for (int x = 0; x < rattning.Length; x++)
-            {
-                if (gissningArray[i] == facit[x] && facitBool[x] == false)  //OBS
-                {
-                    rattning[i] = 2;
-                    facitBool[x] = true; //Kollar om på om just den platsen i facit har blivit matchad. Chatten
-                    break;
-                }
-                else  //Överflödigt?
-                {
-                    rattning[i] = 0;
-                }
-            }
-        }
-
-    } //Loopar igenom en andra gång för att lagra true/false om en bokstav använts.
-
-    Console.WriteLine("\nAnge ny gissning: \t");
-    antalForsok++;   //räkna upp efter varje giltig gissning
-    Console.Write($"Försök {antalForsok}/12 ");
-    gissningStruct.PrintRad();
-    Console.Write(" --> ");
-
-
-
-    for (int i = 0; i < rattning.Length; i++)
-    {
-        switch (rattning[i])
-        {
-            case 1:
-                Console.ForegroundColor = ConsoleColor.Red; //Rätt färg på rätt plats
-                Console.Write("\u2B24");
-                break;
-
-            case 2:
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("\u2B24"); //Rätt färg men fel plats
-                break;
-
-            default:
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.Write("\u2B24"); //Finns inte eller är redan konsumerad
-                break;
-        }
-        Console.ResetColor();
-    }// skriv ut feedback till spelaren
+        allaGissningar[i].PrintAllaGissningarPlusFeedback(facitStruct);
+        Console.WriteLine(); // radbrytning mellan gissningarna
+    } //Skriver ut alla föregående gissningar + feedback om rätt plats/färg
 
     if (rattning.All(x => x == 1))
     {
         Console.Clear();
+        Console.WriteLine("___  ___          _                      _           _ \r\n|  \\/  |         | |                    (_)         | |\r\n| .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |\r\n| |\\/| |/ _` / __| __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` |\r\n| |  | | (_| \\__ \\ ||  __/ |  | | | | | | | | | | (_| |\r\n\\_|  |_/\\__,_|___/\\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|\r\n                                                       \r\n                                                       ");
+
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Grattis du har vunnit spelet!\n");
         facitStruct.PrintRad();
         Console.ResetColor();
-        Console.WriteLine($"Den rätta raden = {facitStruct.HamtaRad()}");
+        Console.WriteLine($"\nDen rätta raden = {facitStruct.HamtaRad()}");
 
         Console.WriteLine("\n\nTryck på Enter 2ggr för att avsluta spelet");
-        Console.ReadKey();
+        Console.ReadKey();//Använder .ALL-metoden istället för att loopa igenom array och kolla om alla värden är 1.
         break;
-    }//Använder .ALL-metoden istället för att loopa igenom array och kolla om alla värden är 1.
+    }// Om alla pluppar är rätt (alla = 1) --> spelaren vinner
 
     if (antalForsok == 12)
     {
@@ -143,35 +90,34 @@ while (SpeletKor == true)
         Console.WriteLine("\nTryck på Enter 2ggr för att avsluta spelet! ");
         Console.ReadKey();
         break;
-    } //Om användaren når 12 gissninar avbryts spelet och en förlusttext skrivs ut
-
-    //}
+    } //Om användaren når 12 gissninar utan att vinna avbryts spelet och en förlusttext skrivs ut
 
 }
 
+
+
 char[] RattRad(Random random)
+{
+    char[] colors = { 'R', 'O', 'Y', 'G', 'B', 'P' }; // En array för att definiera spelets färger.
+    char[] facit = new char[4];
+
+    for (int i = 0; i < facit.Length; i++)
     {
-        char[] colors = { 'R', 'O', 'Y', 'G', 'B', 'P' }; // En array för att definiera färgerna vi valt
-        char[] facit = new char[4];
-
-        for (int i = 0; i < facit.Length; i++)
-        {
-            int index = random.Next(0, colors.Length);
-            facit[i] = colors[index];
-        }
-        return facit;
+        int index = random.Next(0, colors.Length);
+        facit[i] = colors[index];
     }
-//Slumpar fram en rätt rad till facit.
+    return facit;
+} //Slumpar fram en rad till facit med 4 färger.
 
 
-struct Rad          // "Vi ska ha metoder i struct"
+struct Rad     // Struct för att representera en rad i spelet (en gissning eller facit) // "Vi ska ha metoder i struct"
 {
     char[] farger;
 
     public Rad(char[] input)
     {
 
-        farger = input;
+        farger = input;    // Tar emot en array och sparar lokalt i structen
     }
 
 
@@ -208,7 +154,7 @@ struct Rad          // "Vi ska ha metoder i struct"
                 break;
         }
 
-        Console.Write("\u2B24"); // skriver ut plupp
+        Console.Write("\u2B24 "); // skriver ut plupp
         Console.ResetColor(); // reset color
 
     } //Skriver ut plupp i rätt färg kopplat till ROYGBP
@@ -220,75 +166,118 @@ struct Rad          // "Vi ska ha metoder i struct"
             PrintFarg(i);
         }
         //Console.WriteLine(" ");
-    }  // Skriver ut en Rad... Kan jag återanvända den för att skriva ut gissningarna? Kan jag spara dom i någon array eller typ matris?
+    }  // Skriver ut en hel rad... 
 
-    public string HamtaRad()                //hämtar användarens input för att kunna göra en utskrift i slutet av spelet.
+    public string HamtaRad()
     {
         return new string(farger);
+    } // returnerar en string av facit-raden, för utskrift.
+
+    public void PrintAllaGissningarPlusFeedback(Rad facit)
+    {
+        int[] rattning = KontrolleraRad(facit);
+
+        PrintRad();
+        Console.Write(" --> ");
+
+        int antalRoda = 0;
+        int antalVita = 0;
+
+        foreach (int item in rattning)
+        {
+            if (item == 1)
+            {
+                antalRoda++;
+            }
+            else if (item == 2)
+            {
+                antalVita++;
+            }
+        }
+
+        for (int i = 0; i < antalVita; i++)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write('\u2B24');
+            Console.ResetColor();
+        }
+        for (int i = 0; i < antalRoda; i++)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write('\u2B24');
+            Console.ResetColor();
+        }
     }
 
+    public int[] KontrolleraRad(Rad facit)
+    {
+        int[] rattning = new int[4];  //En array för att lagra 0=fel färg, 1=fel plats, rätt färg, 2=rätt plats, rätt färg.
+        bool[] facitBool = new bool[4]; //True = använd, False = ej använd
+        for (int i = 0; i < 4; i++)
+        {
+            if (farger[i] == facit.farger[i])
+            {
+                rattning[i] = 1;
+                facitBool[i] = true;
+            }
+        }// Loopar igenom för att se om rätt färg är på rätt plats.
 
-    //public void PrintAllaGissningarPlusFeedback(Rad facit)
-    //{
-    //    int[] rattning = new int[4];  //En array för att lagra 0=fel färg, 1=fel plats, rätt färg, 2=rätt plats, rätt färg.
-    //    bool[] facitBool = new bool[4]; //True = använd, False = ej använd
+        for (int i = 0; i < rattning.Length; i++)
+        {
+            if (rattning[i] != 1) // Hoppa över om färgen redan var rätt på rätt plats i tidigare forloop.
+            {
 
+                for (int x = 0; x < rattning.Length; x++)
+                {
+                    if (farger[i] == facit.farger[x] && facitBool[x] == false)  //OBS
+                    {
+                        rattning[i] = 2;
+                        facitBool[x] = true; //Kollar på om just den platsen i facit har blivit matchad. Chatten
+                        break;
+                    }
+                }
+            }
 
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        if (farger[i] == facit.farger[i])
-    //        {
-    //            rattning[i] = 1;
-    //            facitBool[i] = true;
-    //        }
-    //    }// Loopar igenom för att se om rätt färg är på rätt plats.
+        }// Loopar igenom en andra gång för att lagra true/false om en bokstav använts.
+        return rattning;
+    }  // Returnerar en array som beskriver rättningen (0 = fel färg, 1 = rätt plats, 2 = rätt färg fel plats)
+       // Metod för att kunna kontrollera/rätta raden gentemot facit. 
+    public void PrintFargText(char farg)   // Vill använda för att färga bokstäverna till respektiva färg i slutet av spelet.
+    {
 
-    //    for (int i = 0; i < rattning.Length; i++)
-    //    {
-    //        if (rattning[i] != 1) // Hoppa över om färgen redan var rätt på rätt plats i tidigare forloop.
-    //        {
+        switch (farg)
+        {
+            case 'R':
+                Console.ForegroundColor = ConsoleColor.Red;
+                break;
 
-    //            for (int x = 0; x < rattning.Length; x++)
-    //            {
-    //                if (farger[i] == facit.farger[x] && facitBool[x] == false)  //OBS
-    //                {
-    //                    rattning[i] = 2;
-    //                    facitBool[x] = true; //Kollar om på om just den platsen i facit har blivit matchad. Chatten
-    //                    break;
-    //                }
-    //                else  //Överflödigt?
-    //                {
-    //                    rattning[i] = 0;
-    //                }
-    //            }
-    //        }
+            case 'O':
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                break;
 
-    //    }// Loopar igenom en andra gång för att lagra true/false om en bokstav använts.
+            case 'Y':
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                break;
 
-    //    PrintRad();
-    //    Console.Write(" --> ");
+            case 'G':
+                Console.ForegroundColor = ConsoleColor.Green;
+                break;
 
-    //    for (int i = 0; i < rattning.Length; i++)
-    //    {
-    //        switch (rattning[i])
-    //        {
-    //            case 1:
-    //                Console.ForegroundColor = ConsoleColor.Red; //Rätt färg på rätt plats
-    //                Console.Write("\u2B24");
-    //                break;
+            case 'B':
+                Console.ForegroundColor = ConsoleColor.Blue;
+                break;
 
-    //            case 2:
-    //                Console.ForegroundColor = ConsoleColor.White;
-    //                Console.Write("\u2B24"); //Rätt färg men fel plats
-    //                break;
+            case 'P':
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                break;
+        }
 
-    //            default:
-    //                Console.ForegroundColor = ConsoleColor.DarkGray;
-    //                Console.Write("\u2B24"); //Finns inte eller är redan konsumerad
-    //                break;
-    //        }
-    //        Console.ResetColor();
-    //    }// skriv ut feedback till spelaren
-    //}
+        Console.Write($" {farg}");  // skriver ut varje char med rätt färg + ett mellanrum mellan bokstäverna
+        Console.ResetColor(); // Behövs detta eftersom vi har konstanten i metoden?.... verkar så
 
+    }
 }
+
+
+
+

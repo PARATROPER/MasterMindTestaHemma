@@ -1,9 +1,10 @@
 ﻿const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå enligt Dag.
+
 Console.OutputEncoding = System.Text.Encoding.UTF8; // Behövs för att kunna skriva ut pluppar (Unicode-symboler)
 Random random = new Random();   // Skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
 char plupp = '\u2B24';          // Möjliggör utskrivt av en plupp i konsollen.
 
-
+// char[] facit = { 'R', 'R', 'B', 'P' }; OM JAG VILL HA EN FÖRDEFINIERAD RAD.
 char[] facit = RattRad(random);  // Skapa en array och slumpa värden för färger, facit som spelaren ska gissa.
 
 Rad facitStruct = new Rad(facit);    // Gör om char arrayen till ett Rad-objekt(Instans?) för att kunna använda metoderna.
@@ -63,7 +64,7 @@ while (SpeletKor == true)
         Console.WriteLine(); // radbrytning mellan gissningarna
     } //Skriver ut alla föregående gissningar + feedback om rätt plats/färg
 
-    if (rattning.All(x => x == 1))    
+    if (rattning.All(x => x == 1))
     {
         Console.Clear();
         Console.WriteLine("___  ___          _                      _           _ \r\n|  \\/  |         | |                    (_)         | |\r\n| .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |\r\n| |\\/| |/ _` / __| __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` |\r\n| |  | | (_| \\__ \\ ||  __/ |  | | | | | | | | | | (_| |\r\n\\_|  |_/\\__,_|___/\\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|\r\n                                                       \r\n                                                       ");
@@ -91,7 +92,7 @@ while (SpeletKor == true)
         break;
     } //Om användaren når 12 gissninar utan att vinna avbryts spelet och en förlusttext skrivs ut
 
-} 
+}
 
 
 
@@ -153,7 +154,7 @@ struct Rad     // Struct för att representera en rad i spelet (en gissning elle
                 break;
         }
 
-        Console.Write("\u2B24"); // skriver ut plupp
+        Console.Write("\u2B24 "); // skriver ut plupp
         Console.ResetColor(); // reset color
 
     } //Skriver ut plupp i rätt färg kopplat till ROYGBP
@@ -167,80 +168,52 @@ struct Rad     // Struct för att representera en rad i spelet (en gissning elle
         //Console.WriteLine(" ");
     }  // Skriver ut en hel rad... 
 
-    public string HamtaRad()  
+    public string HamtaRad()
     {
         return new string(farger);
     } // returnerar en string av facit-raden, för utskrift.
 
-    public void PrintAllaGissningarPlusFeedback(Rad facit) 
+    public void PrintAllaGissningarPlusFeedback(Rad facit)
     {
-        int[] rattning = new int[4];  //En array för att lagra 0=fel färg, 1=fel plats, rätt färg, 2=rätt plats, rätt färg.
-        bool[] facitBool = new bool[4]; //True = använd, False = ej använd
-
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (farger[i] == facit.farger[i])
-            {
-                rattning[i] = 1;
-                facitBool[i] = true;
-            }
-        }// Loopar igenom för att se om rätt färg är på rätt plats.
-
-        for (int i = 0; i < rattning.Length; i++)
-        {
-            if (rattning[i] != 1) // Hoppa över om färgen redan var rätt på rätt plats i tidigare forloop.
-            {
-
-                for (int x = 0; x < rattning.Length; x++)
-                {
-                    if (farger[i] == facit.farger[x] && facitBool[x] == false)  //OBS
-                    {
-                        rattning[i] = 2;
-                        facitBool[x] = true; //Kollar om på om just den platsen i facit har blivit matchad. Chatten
-                        break;
-                    }
-                    //else                              //Överflödigt? JA
-                    //{
-                    //    rattning[i] = 0;
-                    //}
-                }
-            }
-
-        }// Loopar igenom en andra gång för att lagra true/false om en bokstav använts.
+        int[] rattning = KontrolleraRad(facit);
 
         PrintRad();
         Console.Write(" --> ");
 
-        for (int i = 0; i < rattning.Length; i++)
+        int antalRoda = 0;
+        int antalVita = 0;
+
+        foreach (int item in rattning)
         {
-            switch (rattning[i])
+            if (item == 1)
             {
-                case 1:
-                    Console.ForegroundColor = ConsoleColor.Red; //Rätt färg på rätt plats
-                    Console.Write("\u2B24");
-                    break;
-
-                case 2:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("\u2B24"); //Rätt färg men fel plats
-                    break;
-
-                    //default:                                                              //Detta kan jag ta bort???
-                    //    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    //    Console.Write("\u2B24"); //Finns inte eller är redan konsumerad
-                    //    break;
+                antalRoda++;
             }
-            Console.ResetColor();
-        }// skriv ut feedback till spelare
+            else if (item == 2)
+            {
+                antalVita++;
+            }
+        }
 
-    } // Metod för att enkelt skriva ut alla gissningar + feedback rätt/fel för plupparna
+        for (int i = 0; i < antalVita; i++)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write('\u2B24');
+            Console.ResetColor();
+        }
+        for (int i = 0; i < antalRoda; i++)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write('\u2B24');
+            Console.ResetColor();
+        }
+    }
 
     public int[] KontrolleraRad(Rad facit)
     {
         int[] rattning = new int[4];  //En array för att lagra 0=fel färg, 1=fel plats, rätt färg, 2=rätt plats, rätt färg.
         bool[] facitBool = new bool[4]; //True = använd, False = ej använd
-        for (int i = 0; i < 4; i++) 
+        for (int i = 0; i < 4; i++)
         {
             if (farger[i] == facit.farger[i])
             {
@@ -268,12 +241,9 @@ struct Rad     // Struct för att representera en rad i spelet (en gissning elle
         }// Loopar igenom en andra gång för att lagra true/false om en bokstav använts.
         return rattning;
     }  // Returnerar en array som beskriver rättningen (0 = fel färg, 1 = rätt plats, 2 = rätt färg fel plats)
-                                                // Metod för att kunna kontrollera/rätta raden gentemot facit. 
-
-
-
+       // Metod för att kunna kontrollera/rätta raden gentemot facit. 
     public void PrintFargText(char farg)   // Vill använda för att färga bokstäverna till respektiva färg i slutet av spelet.
-    { 
+    {
 
         switch (farg)
         {
