@@ -1,99 +1,120 @@
-﻿const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå enligt Dag.
+﻿using System.ComponentModel.Design;
 
-Console.OutputEncoding = System.Text.Encoding.UTF8; // Behövs för att kunna skriva ut pluppar (Unicode-symboler)
-Random random = new Random();   // Skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
-char plupp = '\u2B24';          // Möjliggör utskrivt av en plupp i konsollen.
+bool spelaIgen = true;
 
-// char[] facit = { 'R', 'R', 'B', 'P' }; OM JAG VILL HA EN FÖRDEFINIERAD RAD.
-char[] facit = RattRad(random);  // Skapa en array och slumpa värden för färger, facit som spelaren ska gissa.
-
-Rad facitStruct = new Rad(facit);    // Gör om char arrayen till ett Rad-objekt(Instans?) för att kunna använda metoderna.
-Rad[] allaGissningar = new Rad[12];  // Array med plats för alla 12 potentiella gissningar
-
-Console.WriteLine("___  ___          _                      _           _ \r\n|  \\/  |         | |                    (_)         | |\r\n| .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |\r\n| |\\/| |/ _` / __| __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` |\r\n| |  | | (_| \\__ \\ ||  __/ |  | | | | | | | | | | (_| |\r\n\\_|  |_/\\__,_|___/\\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|\r\n                                                       \r\n                                                       ");
-Console.WriteLine("Skriv 'Q' = Quit, 'F' = Facit, 'H' = Hjälp");
-Console.WriteLine("\nAnge din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
-
-bool SpeletKor = true;   // Bestämmer om spelet körs eller ska avslutas
-int antalForsok = 0;     // Räknare för antal gissningar användaren gjort
-
-while (SpeletKor == true)
+while (spelaIgen)
 {
-    string gissningInput = Console.ReadLine().ToUpper();    //Läser in användarens gissning och gör om till VERSALER.
+    const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå enligt Dag.
+                                                                // test push vid 12:10
+    Console.OutputEncoding = System.Text.Encoding.UTF8; // Behövs för att kunna skriva ut pluppar (Unicode-symboler)
+    Random random = new Random();   // Skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
+    char plupp = '\u2B24';          // Möjliggör utskrivt av en plupp i konsollen.
 
-    if (gissningInput == "Q")
+    // char[] facit = { 'R', 'R', 'B', 'P' }; OM JAG VILL HA EN FÖRDEFINIERAD RAD.
+    char[] facit = RattRad(random);  // Skapa en array och slumpa värden för färger, facit som spelaren ska gissa.
+
+    Rad facitStruct = new Rad(facit);    // Gör om char arrayen till ett Rad-objekt(Instans?) för att kunna använda metoderna.
+    Rad[] allaGissningar = new Rad[12];  // Array med plats för alla 12 potentiella gissningar
+
+    Console.WriteLine("___  ___          _                      _           _ \r\n|  \\/  |         | |                    (_)         | |\r\n| .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |\r\n| |\\/| |/ _` / __| __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` |\r\n| |  | | (_| \\__ \\ ||  __/ |  | | | | | | | | | | (_| |\r\n\\_|  |_/\\__,_|___/\\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|\r\n                                                       \r\n                                                       ");
+    Console.WriteLine("Skriv 'Q' = Quit, 'F' = Facit, 'H' = Hjälp");
+    Console.WriteLine("\nAnge din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
+
+    bool speletKor = true;   // Bestämmer om spelet körs eller ska avslutas
+    int antalForsok = 0;     // Räknare för antal gissningar användaren gjort
+
+    while (speletKor == true)
     {
-        break;
-    } //Q = avbryter speler
-    else if (gissningInput == "F")
-    {
-        Console.Write("Facit är:");
-        facitStruct.PrintRad();
-        continue;
-    } // F = Visar facit
-    else if (gissningInput == "H")
-    {
-        Console.WriteLine("Skriv 'Q' = Quit, 'F' = Facit, 'H' = Hjälp");
-        Console.Write("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
-        continue;
-    } // H för att få se hjälp-alternativen
+        string gissningInput = Console.ReadLine().ToUpper();    //Läser in användarens gissning och gör om till VERSALER.
+
+        if (gissningInput == "Q")
+        {
+            speletKor = false;
+            spelaIgen = false;
+            break;
+        } //Q = avbryter speler
+        else if (gissningInput == "F")
+        {
+            Console.Write("Facit är:");
+            facitStruct.PrintRad();
+            continue;
+        } // F = Visar facit
+        else if (gissningInput == "H")
+        {
+            Console.WriteLine("Skriv 'Q' = Quit, 'F' = Facit, 'H' = Hjälp");
+            Console.Write("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
+            continue;
+        } // H för att få se hjälp-alternativen
 
 
-    char[] tillatna = { 'R', 'O', 'Y', 'G', 'B', 'P' };
-    if (!gissningInput.All(c => tillatna.Contains(c)) || gissningInput.Length != 4)
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("OBS OBS OBS\nAnvänd exakt 4 tillåtna tecken: R,O,Y,G,B,P");
-        Console.ResetColor();
-        continue;
-    } //validerar input till R,O,Y,G,B,P & max 4 tecken
 
-    // Gör om gissningen till en Rad och lagrar den i historiken --> OBSOBSOBS
-    char[] gissningArray = gissningInput.ToCharArray();  // Gör om string gissningInput till en char-array
-    Rad gissningStruct = new Rad(gissningArray);    // Skapar ny instans av.....??? OBS_OBS_OBS_ Hur formulerar jag detta?
-    allaGissningar[antalForsok] = gissningStruct;
-    antalForsok++;      //Ökar räknaren för varje gissning 
+        char[] tillatna = { 'R', 'O', 'Y', 'G', 'B', 'P' };
+        if (!gissningInput.All(c => tillatna.Contains(c)) || gissningInput.Length != 4)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("OBS OBS OBS\nAnvänd exakt 4 tillåtna tecken: R,O,Y,G,B,P");
+            Console.ResetColor();
+            continue;
+        } //validerar input till R,O,Y,G,B,P & max 4 tecken
 
-    int[] rattning = gissningStruct.KontrolleraRad(facitStruct); //Rättar Raden mot facit och får tillbaka int-array med resultat.
-    Console.Clear();
-    Console.WriteLine($"Försök {antalForsok}/12 - R,O,Y,G,B,P"); //Skriver ut vilket försök användern är på
+        // Gör om gissningen till en Rad och lagrar den i historiken --> OBSOBSOBS
+        char[] gissningArray = gissningInput.ToCharArray();  // Gör om string gissningInput till en char-array
+        Rad gissningStruct = new Rad(gissningArray);    // Skapar ny instans av.....??? OBS_OBS_OBS_ Hur formulerar jag detta?
+        allaGissningar[antalForsok] = gissningStruct;
+        antalForsok++;      //Ökar räknaren för varje gissning 
 
-    for (int i = 0; i < antalForsok; i++)
-    {
-        allaGissningar[i].PrintAllaGissningarPlusFeedback(facitStruct);
-        Console.WriteLine(); // radbrytning mellan gissningarna
-    } //Skriver ut alla föregående gissningar + feedback om rätt plats/färg
-
-    if (rattning.All(x => x == 1))
-    {
+        int[] rattning = gissningStruct.KontrolleraRad(facitStruct); //Rättar Raden mot facit och får tillbaka int-array med resultat.
         Console.Clear();
-        Console.WriteLine("___  ___          _                      _           _ \r\n|  \\/  |         | |                    (_)         | |\r\n| .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |\r\n| |\\/| |/ _` / __| __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` |\r\n| |  | | (_| \\__ \\ ||  __/ |  | | | | | | | | | | (_| |\r\n\\_|  |_/\\__,_|___/\\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|\r\n                                                       \r\n                                                       ");
+        Console.WriteLine($"Försök {antalForsok}/12 - R,O,Y,G,B,P"); //Skriver ut vilket försök användern är på
 
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Grattis du har vunnit spelet!\n");
-        facitStruct.PrintRad();
-        Console.ResetColor();
-        Console.WriteLine($"\nDen rätta raden = {facitStruct.HamtaRad()}");
+        for (int i = 0; i < antalForsok; i++)
+        {
+            allaGissningar[i].PrintAllaGissningarPlusFeedback(facitStruct);
+            Console.WriteLine(); // radbrytning mellan gissningarna
+        } //Skriver ut alla föregående gissningar + feedback om rätt plats/färg
 
-        Console.WriteLine("\n\nTryck på Enter 2ggr för att avsluta spelet");
-        Console.ReadKey();//Använder .ALL-metoden istället för att loopa igenom array och kolla om alla värden är 1.
-        break;
-    }// Om alla pluppar är rätt (alla = 1) --> spelaren vinner
+        if (rattning.All(x => x == 1))
+        {
+            Console.Clear();
+            Console.WriteLine("___  ___          _                      _           _ \r\n|  \\/  |         | |                    (_)         | |\r\n| .  . | __ _ ___| |_ ___ _ __ _ __ ___  _ _ __   __| |\r\n| |\\/| |/ _` / __| __/ _ \\ '__| '_ ` _ \\| | '_ \\ / _` |\r\n| |  | | (_| \\__ \\ ||  __/ |  | | | | | | | | | | (_| |\r\n\\_|  |_/\\__,_|___/\\__\\___|_|  |_| |_| |_|_|_| |_|\\__,_|\r\n                                                       \r\n                                                       ");
 
-    if (antalForsok == 12)
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Grattis du har vunnit spelet!\n");
+            facitStruct.PrintRad();
+            Console.ResetColor();
+            Console.WriteLine($"\nDen rätta raden = {facitStruct.HamtaRad()}");
+
+            //Console.WriteLine("\n\nTryck på Enter 2ggr för att avsluta spelet");
+            Console.ReadKey();//Använder .ALL-metoden istället för att loopa igenom array och kolla om alla värden är 1.
+            break;
+        }// Om alla pluppar är rätt (alla = 1) --> spelaren vinner
+
+        if (antalForsok == 12)
+        {
+            speletKor = false;
+            Console.Clear();
+            Console.WriteLine("Du har förlorat spelet, maxantal gissningar uppnått");
+            Console.Write("Rätt rad va: ");
+            facitStruct.PrintRad();
+            break;
+        } //Om användaren når 12 gissninar utan att vinna avbryts spelet och en förlusttext skrivs ut
+
+    }
+    
+    if (spelaIgen)
     {
-        SpeletKor = false;
+        Console.WriteLine("\nVill du spela igen? (J/N)");
+        string svar = Console.ReadLine().ToUpper();
+        if (svar != "J")
+        {
+            spelaIgen = false;
+            continue;
+        }
         Console.Clear();
-        Console.WriteLine("Du har förlorat spelet, maxantal gissningar uppnått");
-        Console.Write("Rätt rad va: ");
-        facitStruct.PrintRad();
-        Console.WriteLine("\nTryck på Enter 2ggr för att avsluta spelet! ");
-        Console.ReadKey();
-        break;
-    } //Om användaren når 12 gissninar utan att vinna avbryts spelet och en förlusttext skrivs ut
+    } // ===== Fråga om ny spelomgång =====
 
 }
-
+avslutningsMeddelande();
 
 
 char[] RattRad(Random random)
@@ -108,7 +129,18 @@ char[] RattRad(Random random)
     }
     return facit;
 } //Slumpar fram en rad till facit med 4 färger.
+void avslutningsMeddelande()
+{
+    Console.Clear();
+    Console.WriteLine("______GG fellow gamer!______");
+    Console.WriteLine("______GG fellow gamer!______");
+    Console.WriteLine("______GG fellow gamer!______");
 
+
+
+    Console.WriteLine("Tryck på Enter 2 ggr för att stänga programmet!");
+    Console.ReadKey();
+} //Skriver ut ett avslutningsmeddelande
 
 struct Rad     // Struct för att representera en rad i spelet (en gissning eller facit) // "Vi ska ha metoder i struct"
 {

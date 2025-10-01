@@ -1,4 +1,6 @@
-﻿const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå enligt Dag.
+﻿using System.ComponentModel.Design;
+
+const ConsoleColor CONSOLE_FORGRUND = ConsoleColor.Black;   // Deklareras som konstant i övergripande nivå enligt Dag.
 // test push vid 12:10
 Console.OutputEncoding = System.Text.Encoding.UTF8; // Behövs för att kunna skriva ut pluppar (Unicode-symboler)
 Random random = new Random();   // Skapar ett objekt av klassen Random för att senare kunna kalla på random.Next(x,y) och ha som input till RattRad.
@@ -37,9 +39,10 @@ while (SpeletKor == true)
         Console.Write("Ange din färggissning, 4 tecken, välj mellan R,O,Y,G,B,P. \t");
         continue;
     } // H för att få se hjälp-alternativen
+   
+        
 
-
-    char[] tillatna = { 'R', 'O', 'Y', 'G', 'B', 'P' };
+        char[] tillatna = { 'R', 'O', 'Y', 'G', 'B', 'P' };
     if (!gissningInput.All(c => tillatna.Contains(c)) || gissningInput.Length != 4)
     {
         Console.ForegroundColor = ConsoleColor.Red;
